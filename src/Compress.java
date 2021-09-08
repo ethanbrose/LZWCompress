@@ -38,7 +38,7 @@ public class Compress {
 			
 			nextLetterInt = reader.read();
 			nextLetter = "" + (char)nextLetterInt;
-			if(codeTable.containsKey(currLetter + nextLetter)) {
+			if(codeTable.containsKey(currLetter + nextLetter)) { 
 				System.out.println("repeated: " + currLetter + nextLetter);
 				currLetter += nextLetter;
 				//do not add anything to the set, instead add nextLetter - it will add itself as the new current letter when the new (longer length)  string combo is checked
