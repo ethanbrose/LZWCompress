@@ -3,21 +3,26 @@ import java.util.*;
 
 public class Compress {
 	private BufferedReader reader;
-	private HashSet<String> codeTable;
+	private PrintWriter writer;
+	private HashMap<String, Integer> codeTable;
+	private int counter;
 	
 	
-	public Compress(String fileName) throws FileNotFoundException {
+	public Compress(String inputFileName, String outputFileName) throws FileNotFoundException {
 		//constructor; throw is needed for the FileReader
-		codeTable = new HashSet<String>();
+		codeTable = new HashMap<String,Integer>();
 		//initialize codeTable with Strings of ASCII values starting with space(32) and ending with ~ (126)
-		
+		counter = 1;
 		for (int i=32; i<127; i++) 
 		{
-			codeTable.add(String.valueOf((char)(i)));
+			codeTable.put(String.valueOf((char)(i)),counter );
+			counter++;
 		}
 		
-		File inputFile = new File(fileName);
+		File inputFile = new File(inputFileName);
 		reader = new BufferedReader(new FileReader(inputFile));
+		File outputFile = new File(outputFileName);
+		writer = new PrintWriter(outputFile);
 		
 	}
 	
@@ -33,21 +38,26 @@ public class Compress {
 			
 			nextLetterInt = reader.read();
 			nextLetter = "" + (char)nextLetterInt;
-			if(codeTable.contains(currLetter + nextLetter)) {
-				System.out.println("repeat " + currLetter + nextLetter);
+			if(codeTable.containsKey(currLetter + nextLetter)) {
+				System.out.println("repeated: " + currLetter + nextLetter);
 				currLetter += nextLetter;
-				
-				
+				//do not add anything to the set, instead add nextLetter - it will add itself as the new current letter when the new (longer length)  string combo is checked
+				writer.print("" + codeTable.get(currLetter)+ " ");
 			}
 			else {
-				codeTable.add(currLetter+nextLetter);
-				//hashSet does not add if it's already in there
+				codeTable.put(currLetter+nextLetter, counter);
+				counter++;
+				//HashSet does not add if object is already in the set
 				currLetter = nextLetter;
 			}
 			
 			
 		}
-		
+		reader.close();
+		writer.close();
 	}
+	
+	
+	
 	
 }
