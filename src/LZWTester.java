@@ -51,7 +51,7 @@ public class LZWTester {
 		                   
 		                    String words[] = line2.split("\\s+");
 		                    wordCount += words.length;
-		                 
+		                 // this may be registering new lines as its ascii characters 
 		                }
 		            
 		         
