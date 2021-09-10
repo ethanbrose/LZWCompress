@@ -3,12 +3,14 @@ import java.util.*;
 
 public class Compress {
 	private BufferedReader reader;
-	//private PrintWriter writer;
 	private HashMap<String, Integer> codeTable;
 	private int counter;
-	private String outputFileName;
 	FileOutputStream fos;
+	private String binString;
 	
+
+
+
 	
 	public Compress(String inputFileName, String outputFileName) throws FileNotFoundException {
 		//constructor; throw is needed for the FileReader
@@ -22,11 +24,9 @@ public class Compress {
 		}
 		
 		File inputFile = new File(inputFileName);
-		reader = new BufferedReader(new FileReader(inputFile));
-//		File outputFile = new File(outputFileName);
-//		writer = new PrintWriter(outputFile);
-		
+		reader = new BufferedReader(new FileReader(inputFile));		
 		fos = new FileOutputStream(outputFileName);
+		binString = "";
 		
 	}
 	
@@ -48,8 +48,8 @@ public class Compress {
 				System.out.println("repeated: " + currLetter + nextLetter);
 				currLetter += nextLetter;
 				//do not add anything to the set, instead add nextLetter - it will add itself as the new current letter when the new (longer length)  string combo is checked
-//				writer.print("" + codeTable.get(currLetter)+ " ");
-				fos.write(intToByteArray(codeTable.get(currLetter)));
+				binString+= intToBinary(codeTable.get(currLetter));
+				
 				
 				
 			}
@@ -63,25 +63,28 @@ public class Compress {
 			
 		}
 		reader.close();
-		//writer.close();
+		
+		
+		char[] charArray = binString.toCharArray(); // for ascii to array of bytes method 
+		//http://www.java2s.com/Tutorial/Java/0180__File/Translatesbetweenbytearraysandstringsof0sand1s.htm
+		
+		byte[] rawData = BinaryEncoder.fromAscii(charArray);
+		
+		fos.write(rawData);
+		
+		fos.close();
 	}
 	
-	private byte[] intToByteArray ( int i ) throws IOException {      
-	    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-	    DataOutputStream dos = new DataOutputStream(bos);
-	    dos.writeInt(i);
-	    dos.flush();
-	    return bos.toByteArray();
-	}
-	
-	
-	
-			
 
+	
+	  public String intToBinary(int num)
+	    {
+	        return Integer.toBinaryString(num);
+	    }
+	  
+	  
+	
 
-			
-	//https://stackoverflow.com/questions/33069182/how-to-write-binary-to-a-file-in-java
-			
 			
 	        
 		

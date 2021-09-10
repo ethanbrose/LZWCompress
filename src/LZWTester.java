@@ -3,7 +3,7 @@ import java.io.*;
 public class LZWTester {
 
 	public static void main(String[]args) throws IOException {
-			Compress compressor = new Compress("lzw-file1.txt", "EncodedOutput.dat");
+			Compress compressor = new Compress("lzw-file1.txt", "EncodedOutput.txt");
 			//remember the import statement at the top for BufferedReader and FileReader
 			compressor.encode();
 			//System.out.println("DONE");
