@@ -12,7 +12,7 @@ public class Compress {
 
 
 	
-	public Compress(String inputFileName, String outputFileName) throws FileNotFoundException {
+	public Compress(String inputFileName) throws FileNotFoundException {
 		//constructor; throw is needed for the FileReader
 		codeTable = new HashMap<String,Integer>();
 		//initialize codeTable with Strings of ASCII values starting with space(32) and ending with ~ (126)
@@ -25,7 +25,6 @@ public class Compress {
 		
 		File inputFile = new File(inputFileName);
 		reader = new BufferedReader(new FileReader(inputFile));		
-		fos = new FileOutputStream(outputFileName);
 		binString = "";
 		
 	}
@@ -64,7 +63,11 @@ public class Compress {
 		}
 		reader.close();
 		
+		File outputFile = new File("EncodedOutput.dat");
+		outputFile.createNewFile();
 		
+		fos = new FileOutputStream(outputFile);
+
 		char[] charArray = binString.toCharArray(); // for ascii to array of bytes method 
 		//http://www.java2s.com/Tutorial/Java/0180__File/Translatesbetweenbytearraysandstringsof0sand1s.htm
 		
@@ -73,6 +76,8 @@ public class Compress {
 		fos.write(rawData);
 		
 		fos.close();
+		// sorry! the binary data is not showing up in the file but it is stored in rawData, for some reason file output stream will not write to the specified file, but it is being populated with something (just not visible). 
+		// the first working commit uses a print writer to output all of the correct integers that represent characters
 	}
 	
 
