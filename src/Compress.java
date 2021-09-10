@@ -47,7 +47,8 @@ public class Compress {
 				System.out.println("repeated: " + currLetter + nextLetter);
 				currLetter += nextLetter;
 				//do not add anything to the set, instead add nextLetter - it will add itself as the new current letter when the new (longer length)  string combo is checked
-				binString+= intToBinary(codeTable.get(currLetter));
+				//binString+= intToBinary(codeTable.get(currLetter));
+				
 				
 				
 				
@@ -63,19 +64,21 @@ public class Compress {
 		}
 		reader.close();
 		
-		File outputFile = new File("EncodedOutput.dat");
-		outputFile.createNewFile();
+		Collection<Integer> intVals = codeTable.values(); // encoded int vals
 		
-		fos = new FileOutputStream(outputFile);
-
-		char[] charArray = binString.toCharArray(); // for ascii to array of bytes method 
-		//http://www.java2s.com/Tutorial/Java/0180__File/Translatesbetweenbytearraysandstringsof0sand1s.htm
-		
-		byte[] rawData = BinaryEncoder.fromAscii(charArray);
-		
-		fos.write(rawData);
-		
-		fos.close();
+//		File outputFile = new File("EncodedOutput.dat");
+//		outputFile.createNewFile();
+//		
+//		fos = new FileOutputStream(outputFile);
+//
+//		char[] charArray = binString.toCharArray(); // for ascii to array of bytes method 
+//		//http://www.java2s.com/Tutorial/Java/0180__File/Translatesbetweenbytearraysandstringsof0sand1s.htm
+//		
+//		byte[] rawData = BinaryEncoder.fromAscii(charArray);
+//		
+//		fos.write(rawData);
+//		
+//		fos.close();
 		// sorry! the binary data is not showing up in the file but it is stored in rawData, for some reason file output stream will not write to the specified file, but it is being populated with something (just not visible). 
 		// the first working commit uses a print writer to output all of the correct integers that represent characters
 	}
