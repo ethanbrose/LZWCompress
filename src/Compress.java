@@ -41,24 +41,25 @@ public class Compress {
 		int nextLetterInt = 0; 
 		String currString, nextLetter;
 		currString = "";
-
+		nextLetterInt = reader.read();
 		while(nextLetterInt != -1) {
-			nextLetterInt = reader.read();
 			nextLetter = "" + (char)nextLetterInt;
-			if(codeTable.containsKey(currString + nextLetter)) { 
+			if(codeTable.containsKey(currString + nextLetter)) {
 				System.out.println("repeated: " + currString + nextLetter);
 				currString += nextLetter;
+//				outputIntegerCodes.add(codeTable.get(currString));
 			}
 			else {
 				codeTable.put(currString+nextLetter, counter);
+				outputIntegerCodes.add(codeTable.get(currString));
 				counter++;
 				//HashSet does not add if object is already in the set
 				currString = nextLetter;
 			}
+			nextLetterInt = reader.read();
 		}
+		outputIntegerCodes.add(codeTable.get(currString));
 		reader.close();
-
-		Collection<Integer> intVals = codeTable.values(); // encoded int vals
 
 		//		File outputFile = new File("EncodedOutput.dat");
 		//		outputFile.createNewFile();
