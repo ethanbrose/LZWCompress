@@ -17,14 +17,13 @@ public class Compress {
 	private static final int BIT_5 = 0x020;
 	private static final int BIT_6 = 0x040;
 	private static final int BIT_7 = 0x080;
-	private static final int BIT_8 = 0x0100;
+	private static final int BIT_8 = 0x100;
 
 	private static final int[] BITS = { BIT_0, BIT_1, BIT_2, BIT_3, BIT_4, BIT_5, BIT_6, BIT_7, BIT_8 };
 
 	public Compress(String inputFileName) throws FileNotFoundException {
 		//constructor; throw is needed for the FileReader
 		codeTable = new HashMap<String,Integer>();
-		outputIntegerCodes =new ArrayList<Integer>();
 		//initialize codeTable with Strings of ASCII values starting with space(32) and ending with ~ (126)
 		counter = 0;
 		for (int i=0; i<256; i++) 
@@ -35,7 +34,6 @@ public class Compress {
 
 		File inputFile = new File(inputFileName);
 		reader = new BufferedReader(new FileReader(inputFile));
-
 	}
 
 
@@ -55,10 +53,8 @@ public class Compress {
 				codeTable.put(currString+nextLetter, counter);
 				counter++;
 				//HashSet does not add if object is already in the set
-				currString = "";
+				currString = nextLetter;
 			}
-
-
 		}
 		reader.close();
 
